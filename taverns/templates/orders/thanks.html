@@ -1,4 +1,4 @@
-{% extends 'shop/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}
 |Спасмбо
@@ -9,5 +9,8 @@
 <!--ОЧЕРЕДЬ-->
 
 
+
+  <h1>Спасибо за заказ</h1>
+  <p>Идентификатор вашего заказа: {{ order.id }}</p>
 {% endblock %}
 

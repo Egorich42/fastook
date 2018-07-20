@@ -44,3 +44,5 @@ class Product(models.Model):
         
     def get_absolute_url(self):
         return reverse('taverns:detail', args=[str(self.slug)])
+
+#        http://dikiigrigorii.ru/blog/article/internet-magazin-na-django-stranica-zakazov-chast-6/19/
