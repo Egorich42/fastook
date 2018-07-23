@@ -1,0 +1,37 @@
+{% load static %}
+{% block title %}
+<title>"Бухгалтерские советы"</title>
+
+<link rel="stylesheet" href="{% static "/css/style.css" %}">
+<link rel="stylesheet" href="{% static "/css/media-style.css" %}">
+{% endblock %}
+{% block content %}
+<section class="main flex column vertical-content-center">
+
+
+<section class="login">
+<img src="/static/icons/logo-busy.png" alt="background" title="logo">
+
+{% if user.is_authenticated %}
+{{user.username}} Хотите посетить личный кабинет? <a href="/users/{{user.id}}">Войти</a>
+{{client.name}}
+{% else %}
+<!--p>Войти в личный кабинет</p-->
+<form id="login_form" method="post" action="/users/login/" >
+{% csrf_token %}
+<p>Логин:</p> 
+<input type="text" name="username" value="" size="50" />
+<p>Пароль:</p> 
+<input type="password" name="password" value="" size="50" />
+<input type="submit" value="войти" class="forma-button" />
+</form>
+
+{% if form.errors %}
+    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
+  {% endif %}
+
+{% endif %}
+</section>
+</section>
+{% endblock %}
+

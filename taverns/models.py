@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from clients.models import Client
 
 # Create your models here.
 class Taverna(models.Model):
+    owner = models.ForeignKey(Client, related_name='owner', on_delete=models.CASCADE, verbose_name="владелец", default=1)
     icon = models.ImageField(upload_to='place_icons/', blank=True, verbose_name="Аватарка заведения")
     name = models.CharField(max_length=200, db_index=True, verbose_name="Название")
     adres = models.CharField(max_length=200, db_index=True, verbose_name="Адрес")

@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'taverns',
     'cart',
     'orders',
+    'clients',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_fastook',
+        'NAME': 'django_db',
         'USER': 'egor_fastook',
         'PASSWORD': '1234567q',
         'HOST': '',

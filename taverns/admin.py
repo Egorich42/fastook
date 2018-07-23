@@ -6,7 +6,7 @@ from .models import Taverna, Product
 
 
 class TavernaAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'icon']
+    list_display = ['name', 'slug', 'owner']
     prepopulated_fields = {'slug': ('name', )}
 
 
