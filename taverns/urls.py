@@ -11,6 +11,6 @@ from django.conf.urls import *
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
-    url(r'^(?P<slug>[-\w]+)/$', views.show_tavern, name='show_tavern'), 
-    url(r'^articles/(?P<slug>[-\w]+)/$',  views.show_product, name='detail'),
+    url(r'^places/(?P<slug>[-\w]+)/$', views.show_tavern, name='detali'), 
+    url(r'^products/(?P<slug>[-\w]+)/$',  views.show_product, name='detail'),
 ]

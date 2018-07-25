@@ -23,6 +23,12 @@ class Taverna(models.Model):
         return str(self.name)
 
 
+    def get_absolute_url(self):
+        return reverse('taverns:detali', args=[str(self.slug)])
+
+
+
+
 class Product(models.Model):
     place = models.ForeignKey(Taverna, related_name='products', on_delete=models.CASCADE, blank=True, verbose_name="Заведение")
     name = models.CharField(max_length=200, db_index=True, verbose_name="Название")
@@ -41,7 +47,7 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
     def __str__(self):
-        return str(self.place)
+        return str(self.name)
 
         
     def get_absolute_url(self):

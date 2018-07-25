@@ -6,13 +6,12 @@
 {% block content %}
 
 
-
 <div class="card-deck">
 {%for tavern in taverns%}
   <div class="card">
     <img class="card-img-top" src="{% if tavern.icon %}{{ tavern.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title"><a href="{{tavern.slug}}">{{tavern.name}}</a></h5>
+      <h5 class="card-title"><a href="orders/{{tavern.id}}">{{tavern.name}}</a></h5>
     </div>
     <div class="card-footer">
       <small class="text-muted">адрес: {{tavern.adres}}</small>

@@ -2,3 +2,4 @@ body{}
 header{}
 a, ul li, li{text-decoration: none;}
 footer{}
+img{max-width: 200px;}

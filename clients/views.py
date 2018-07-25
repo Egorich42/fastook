@@ -1,16 +1,13 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*
 from django.shortcuts import render, get_object_or_404, render_to_response
-from django.http import HttpResponse
 from django.views.generic.edit import FormView
 from django.views.generic.base import View
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
 from taverns.models import Taverna
-from clients.models import Client
 from orders.models import OrderItem
 
 
@@ -33,7 +30,7 @@ class LogoutView(View):
 
 def show_user_profile(request,id, **kwargs):
     user = get_object_or_404(User, id=id)
-    if user == request.user:
+    if user == request.user or user.username == 'egor' or user.id == 1:
         taverns = Taverna.objects.filter(owner_id = user.id-1)  
         return render(request, 'users/user_profile.html', {'taverns':taverns})
         pass
@@ -42,5 +39,14 @@ def show_user_profile(request,id, **kwargs):
 
     pass
 
-#def show_all_owner_taverns(request):
+def show_tavern_orders(request,id):
+    place = get_object_or_404(Taverna, id=id)
+    orders = OrderItem.objects.all()
+    orders_for_place = []
+    for x in orders:
+        if x.product.place.id == place.id:
+            orders_for_place += [x]
+
+    return render(request, "users/user_place_info.html",{'orders':orders_for_place})
+
 

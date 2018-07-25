@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+&nbsp;|&nbsp;{{user.username}}
+{% endblock %}
+{% block content %}
+
+
+
+<div class="card-deck">
+{%for order in orders%}
+  <div class="card">
+
+    <div class="card-body">
+      <h5 class="card-title">{{order.order.appointed_time}}</h5>
+      <h5 class="card-title">{{order.product.name}}</h5>
+      колличество{{order.quantity}}
+      цена{{order.get_cost}}
+      общая цена{{order.price}}
+
+
+
+
+    </div>
+  </div>
+
+{%endfor%}
+ </div> 
+{% endblock %}
+

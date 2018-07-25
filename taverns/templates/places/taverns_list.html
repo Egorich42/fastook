@@ -13,7 +13,7 @@
   <div class="card">
     <img class="card-img-top" src="{% if place.icon %}{{ place.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">
     <div class="card-body">
-      <h5 class="card-title"><a href="{{place.slug}}">{{place.name}}</a></h5>
+      <h5 class="card-title"><a href="{{place.get_absolute_url}}">{{place.name}}</a></h5>
       <p class="card-text">Шаурменная по аддресу такому-то гтовит для вас жранину, собака дурная</p>
     </div>
     <div class="card-footer">

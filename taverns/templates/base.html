@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<title>Fastook</title>
+<title>Fastook{% block title %}{% endblock %}</title>
 <!--meta name="yandex-verification" content="7b226c052cc4cab5" /-->
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 <meta name="robots" content="index, follow" /> 
@@ -36,10 +36,11 @@
 
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
 <a href="/">главная</a>
-<a href="/login">войти</a>
+<a href="clients/login">войти</a>
+
+<a href="clients/{{user.id}}">{{user.username}}</a>
 <a href="#">корзина</a>
 </nav>
-
 
 </header>
 <div class="container">
