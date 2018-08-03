@@ -6,3 +6,4 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['appointed_time']
+        exclude =['created', 'updated', 'paid']

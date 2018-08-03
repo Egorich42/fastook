@@ -45,14 +45,14 @@ class Cart(object):
 
         for item in self.cart.values():
             item['price'] = item['price']
-            item['total_price'] = item['price'] * item['quantity']
+            item['total_price'] = float(item['price']) * float(item['quantity'])
             yield item
 
     # Количество товаров
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
     def get_total_price(self):
-        return sum(float(item['price']) * item['quantity'] for item in self.cart.values())
+        return sum(float(item['price']) * float(item['quantity']) for item in self.cart.values())
  
     def clear(self):
         del self.session[settings.CART_SESSION_ID]

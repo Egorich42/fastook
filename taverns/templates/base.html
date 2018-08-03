@@ -36,10 +36,13 @@
 
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
 <a href="/">главная</a>
-<a href="clients/login">войти</a>
+{% if user.is_authenticated %}
+<a href="clients/{{user.rus_name}}">{{user.rus_name}}{{user.name}}{{user.username}}</a>
 
-<a href="clients/{{user.id}}">{{user.username}}</a>
-<a href="#">корзина</a>
+<a href="clients/logout">выйти</a>
+{%else%}
+<a href="clients/login">войти</a>{%endif%}
+<a href="/cart">корзина</a>
 </nav>
 
 </header>
