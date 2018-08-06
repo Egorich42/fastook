@@ -5,7 +5,6 @@ import datetime
 class Order(models.Model):
     appointed_time = models.TimeField(default=datetime.time(16))
     created = models.DateTimeField(verbose_name='Создан', auto_now_add=True)
-    updated = models.DateTimeField(verbose_name='Обновлен', auto_now=True)
     paid = models.BooleanField(verbose_name='Оплачен', default=False)
 
     class Meta:

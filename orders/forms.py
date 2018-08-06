@@ -6,4 +6,7 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['appointed_time']
-        exclude =['created', 'updated', 'paid']
+        widgets = {
+            'appointed_time': forms.TimeInput(format='%H:%M'),
+        }
+        exclude =['created',]

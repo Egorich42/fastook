@@ -43,12 +43,9 @@ def show_tavern_orders(request,id, id_tavern):
     user = get_object_or_404(User, id=id)
     if user == request.user or user.username == 'egor' or user.id == 1:
         place = get_object_or_404(Taverna, id=id_tavern)
-        orders = OrderItem.objects.all()
-        orders_for_place = []
-        for x in orders:
-            if x.product.place.id == place.id:
-                orders_for_place += [x]
+        orders_for_place = OrderItem.objects.all().filter(product__place__id = place.id)
 
         return render(request, "users/user_place_info.html",{'orders':orders_for_place})
 
-
+    else:
+        return render(request, "singles/clients/office_login_error.html")

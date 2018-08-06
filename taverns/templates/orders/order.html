@@ -17,6 +17,11 @@
     </form>
   </div>
 
+  {% if form.errors %}
+    <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
+  {% endif %}
+
+
   <div class="order-info col-sm-8">
     <h2>Ваш заказ</h2>
     <ul>

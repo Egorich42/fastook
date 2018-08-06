@@ -25,11 +25,11 @@
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
 <a href="/">главная</a>
 {% if user.is_authenticated %}
-<a href="{{user.client.get_absolute_url}}">{{user.client.rus_name}}</a>
+<a href="{{user.client.get_absolute_url}}">{{user.username}}</a>
 
-<a href="logout">выйти</a>
+<a href="/logout">выйти</a>
 {%else%}
-<a href="login">войти</a>
+<a href="/login">войти</a>
 {% endif %}
 <a href="/cart">корзина</a>
 </nav>
