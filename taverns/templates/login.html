@@ -16,7 +16,7 @@
 Здравствуйте, <span>{{user.username}}</span>, Хотите посетить личный кабинет? <a href="/clients/{{user.id}}">Войти</a>
 {% else %}
 <!--p>Войти в личный кабинет</p-->
-<form id="login_form" method="post" action="/clients/login/" >
+<form id="login_form" method="post" action="/login/" >
 {% csrf_token %}
 <p>Логин:</p> 
 <input type="text" name="username" value="" size="50" />

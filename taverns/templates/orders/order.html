@@ -11,7 +11,7 @@
   <div class="col-sm-4">
     <h2>Заполните форму</h2>
     <form class="order-form" action="." method="post">
-      {{ form.as_p }}
+      {{form.appointed_time}}
       {% csrf_token %}
       <input type="submit" value="Отправить">
     </form>

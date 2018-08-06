@@ -8,10 +8,7 @@ from cart.forms import CartAddProductForm
 # Create your views here.
 def main(request):
 	places = Taverna.objects.all()
-	clients = Client.objects.all()
-	for x in clients:
-		print(x.name,x.get_absolute_url)
-	return render(request, 'places/taverns_list.html',{'places':places})
+	return render(request, 'places/taverns_list.html', {'places':places})
 
 
 def show_tavern(request, slug):
