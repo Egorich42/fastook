@@ -12,6 +12,7 @@
     <h2>Заполните форму</h2>
     <form class="order-form" action="." method="post">
       {{form.appointed_time}}
+      {{form.help_texts}}
       {% csrf_token %}
       <input type="submit" value="Отправить">
     </form>

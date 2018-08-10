@@ -14,11 +14,16 @@
     <div class="card-body">
       <h5 class="card-title">{{order.order.appointed_time}}</h5>
       <h5 class="card-title">{{order.product.name}}</h5>
-      колличество{{order.quantity}}
-      цена{{order.get_cost}}
-      общая цена{{order.price}}
+      <h5 class="card-title">колличество:{{order.quantity}}</h5>
+      <h5 class="card-title">общая_цена:{{order.get_cost}}</h5>
+      <h5 class="card-title">цена:{{order.price}}</h5>
+      <h5 class="card-title">номер заказа: {{order.generate_mark}}</h5>
 
 
+
+    <form action="/" method="post">
+      <input type="submit" value="прописка">
+    </form>
 
 
     </div>

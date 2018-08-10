@@ -7,6 +7,7 @@ class OrderCreateForm(forms.ModelForm):
         model = Order
         fields = ['appointed_time']
         widgets = {
-            'appointed_time': forms.TimeInput(format='%H:%M'),
+            'appointed_time': forms.TimeInput(format='%H:%M',attrs={'placeholder': 'Some help text'}),
         }
+
         exclude =['created',]

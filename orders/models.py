@@ -24,6 +24,18 @@ class OrderItem(models.Model):
     price = models.DecimalField(verbose_name='Цена', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(verbose_name='Количество', default=1)
 
+    def generate_mark(self):
+        if self.quantity <= 9:
+            self.quantity = '0{}'.format(self.quantity)
+
+        if self.product.id <= 9:
+            self.product.id = '0{}'.format(self.product.id)
+
+        if self.product.place.id <= 9:
+            self.product.place.id = '0{}'.format(self.product.place.id)
+
+        return '{}{}{}{}'.format(self.id, self.product.place.id, self.product.id, self.quantity)
+
     def __str__(self):
         return '{}'.format(self.id)
 
