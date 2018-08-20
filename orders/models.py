@@ -1,11 +1,22 @@
 from django.db import models
 from taverns.models import Product, Taverna
 import datetime
+from django.conf import settings
+from django.contrib.sessions.backends.db import SessionStore
+
+
+def get_session_k():
+    s = SessionStore()
+    s.save()
+    return s.session_key
+    pass
 
 class Order(models.Model):
+    item_stats = (('wait', 'Ожидает'),('ready','Готов'),('paid','Оплачен'))
+    session_key = get_session_k()
     appointed_time = models.TimeField(default=datetime.time(16))
     created = models.DateTimeField(verbose_name='Создан', auto_now_add=True)
-    paid = models.BooleanField(verbose_name='Оплачен', default=False)
+    item_status = models.CharField(max_length = 20, choices=item_stats, db_index=True, default = item_stats[0], verbose_name='статус заказа')
 
     class Meta:
         ordering = ('-created', )
@@ -14,9 +25,18 @@ class Order(models.Model):
 
     def __str__(self):
         return 'Заказ: {}'.format(self.id)
+        pass
 
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
+        pass
+
+
+
+
+
+
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE,)
@@ -38,9 +58,12 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return '{}'.format(self.id)
+        pass
 
     def get_cost(self):
         return self.price * self.quantity
+        pass
 
     def get_absolute_url(self):
         return reverse('orders:detali', args=[str(self.id)])
+        pass

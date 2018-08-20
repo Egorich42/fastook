@@ -3,6 +3,11 @@
   Ваша корзина товаров
 {% endblock %}
 {% block content %}
+
+
+{%for x in orders%}
+{{x}}
+{%endfor%}
   <h1>Ваша корзина товаров</h1>
   <table class="cart">
     <thead>

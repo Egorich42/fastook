@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
 from taverns.models import Taverna
-from orders.models import OrderItem
+from orders.models import OrderItem, Order
 
 
 class LoginFormView(FormView):
@@ -40,15 +40,35 @@ def show_user_profile(request,id, **kwargs):
     pass
 
 def show_tavern_orders(request,id, id_tavern):
-    user = get_object_or_404(User, id=id)
-    
+    user = get_object_or_404(User, id=id) 
+
     if user == request.user or user.username == 'egor' or user.id == 1:
-        place = get_object_or_404(Taverna, id=id_tavern)
-        orders_for_place = OrderItem.objects.all().filter(product__place__id = place.id)
+        if request.method == 'POST':
+
+            post_value = list(request.POST.keys())[1]
+            status = Order.item_stats[1][0]
+
+            if post_value == 'wait':
+                status = Order.item_stats[1][0]
+                print(status)
+
+            if post_value == 'ready':
+                status = Order.item_stats[2][0]
+                print(status)
+
+            chosen_order = Order.objects.filter(id = request.POST[post_value]).update(item_status = status)
 
 
-
-        return render(request, "users/user_place_info.html", {'orders':orders_for_place})
+#            print(chosen_order.item_status)
+            return render(request, "users/user_place_info.html")
+        else:    
+            place = get_object_or_404(Taverna, id=id_tavern)
+            orders_for_place_wait = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0][0])
+            orders_for_place_ready = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[1][0])
+            orders_for_place_paid = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2][0])
+            return render(request, "users/user_place_info.html", {'orders_wait':orders_for_place_wait,
+                                                              'orders_ready':  orders_for_place_ready, 
+                                                              'orders_paid': orders_for_place_paid})
 
     else:
         return render(request, "singles/clients/office_login_error.html")

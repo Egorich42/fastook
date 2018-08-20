@@ -7,29 +7,93 @@
 
 
 
+<span>________________________________WAIT__________________________</span>
+
 <div class="card-deck">
-{%for order in orders%}
+
+{%for order_w in orders_wait%}
+
   <div class="card">
 
     <div class="card-body">
-      <h5 class="card-title">{{order.order.appointed_time}}</h5>
-      <h5 class="card-title">{{order.product.name}}</h5>
-      <h5 class="card-title">колличество:{{order.quantity}}</h5>
-      <h5 class="card-title">общая_цена:{{order.get_cost}}</h5>
-      <h5 class="card-title">цена:{{order.price}}</h5>
-      <h5 class="card-title">номер заказа: {{order.generate_mark}}</h5>
+      <h5 class="card-title">{{order_w.order.appointed_time}}</h5>
+      <h5 class="card-title">{{order_w.product.name}}</h5>
+      <h5 class="card-title">колличество:{{order_w.quantity}}</h5>
+      <h5 class="card-title">общая_цена:{{order_w.get_cost}}</h5>
+      <h5 class="card-title">цена:{{order_w.price}}</h5>
+      <h5 class="card-title">номер заказа: {{order_w.generate_mark}}</h5>
+      <h5 class="card-title">номер заказа: {{order_w.order.item_status}}</h5>
 
 
 
-    <form action="/" method="post">
-      <input type="submit" value="прописка">
+    <form action="" method="post">
+        {% csrf_token %}
+         <input name="wait" value="{{order_w.id}}">
+
+        <input type="submit" value="Готов" />
     </form>
+
+
+
+
+    </div>
+
+  </div>
+
+{%endfor%}
+</div>
+<span>________________________________READY__________________________</span>
+
+<div class="card-deck">
+{%for order_r in orders_ready %}
+
+  <div class="card">
+
+    <div class="card-body">
+      <h5 class="card-title">{{order_r.order.appointed_time}}</h5>
+      <h5 class="card-title">{{order_r.product.name}}</h5>
+      <h5 class="card-title">колличество:{{order_r.quantity}}</h5>
+      <h5 class="card-title">общая_цена:{{order_r.get_cost}}</h5>
+      <h5 class="card-title">цена:{{order_r.price}}</h5>
+      <h5 class="card-title">номер заказа: {{order_r.generate_mark}}</h5>
+      <h5 class="card-title">номер заказа: {{order_r.order.item_status}}</h5>
+
+
+
+
+    <form action="" method="post">
+        {% csrf_token %}
+         <input name="ready" value="{{order_r.id}}">
+
+        <input type="submit" value="Готов" />
+    </form>
+
+    </div>
+  </div>
+
+{%endfor%}
+</div>
+<span>________________________________PAID___________________________</span>
+
+<div class="card-deck">
+
+{%for order_p in orders_paid%}
+  <div class="card">
+
+    <div class="card-body">
+      <h5 class="card-title">{{order_p.order.appointed_time}}</h5>
+      <h5 class="card-title">{{order_p.product.name}}</h5>
+      <h5 class="card-title">колличество:{{order_p.quantity}}</h5>
+      <h5 class="card-title">общая_цена:{{order_p.get_cost}}</h5>
+      <h5 class="card-title">цена:{{order_p.price}}</h5>
+      <h5 class="card-title">номер заказа: {{order_p.generate_mark}}</h5>
+      <h5 class="card-title">номер заказа: {{order_p.order.item_status}}</h5>
 
 
     </div>
   </div>
 
 {%endfor%}
- </div> 
+</div>
 {% endblock %}
 

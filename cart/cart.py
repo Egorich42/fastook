@@ -51,8 +51,13 @@ class Cart(object):
     # Количество товаров
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
+
     def get_total_price(self):
         return sum(float(item['price']) * float(item['quantity']) for item in self.cart.values())
+
+    def get_session_id(self):
+        return self.session.get(settings.CART_SESSION_ID)
+        
  
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
