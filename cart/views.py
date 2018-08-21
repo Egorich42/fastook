@@ -6,6 +6,8 @@ from django.views.decorators.http import require_POST
 from taverns.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from django.contrib.sessions.backends.db import SessionStore
+from orders.models import OrderItem
 
 
 @require_POST
@@ -29,10 +31,11 @@ def CartRemove(request, product_id):
 
 def CartDetail(request):
     cart = Cart(request)
+    my_orders = OrderItem.objects.filter(sess_id = request.session.session_key)
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(
                                         initial={
                                             'quantity': item['quantity'],
                                             'update': True
                                         })
-    return render(request, 'cart/cart_detail.html', {'cart': cart})
+    return render(request, 'cart/cart_detail.html', {'cart': cart, 'my_orders':my_orders})

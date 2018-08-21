@@ -5,9 +5,19 @@
 {% block content %}
 
 
-{%for x in orders%}
-{{x}}
+{%for my_order in my_orders%}
+
+картиинка - <img src="/media/{{my_order.product.image}}" style="max-width: 100px;">
+колличество - {{my_order.quantity}}
+заведение - {{my_order.product.place.name}}
+цена за еденицу - {{my_order.price}}
+полная цена - {{my_order.get_cost}}
+
 {%endfor%}
+
+
+
+
   <h1>Ваша корзина товаров</h1>
   <table class="cart">
     <thead>
