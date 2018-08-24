@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-|НАЗВАНИЕ ЗАВЕДЕНИЯ-Жранина
+|{{product.name}}
 {% endblock %}
 {% block content %}
 <!--жранинка-->
 <!--ОПИСАНИЕ С ФОТО -->
 <!-- ЗАКАЗ -->
-<div class="card-deck" >
-<div class="card" >
-    <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">  <div class="card-body">
-    <h5 class="card-title">{{product.name}}</h5>
-    <p class="card-text">{{product.description}}</p>
-    <a href="#" class="btn btn-primary">Заказать</a>
-  </div>
+<div class="row justify-content-center">
+
+
+<div class="card w-50 " >
+  <div class="card-header">
+<h3 class="card-title">{{product.name}}</h3>
 </div>
+    <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">  <div class="card-body">
+    
+    <p class="card-text">{{product.description}}</p>
+  </div>
+
+  <form action="{% url "cart:CartAdd" product.id %}" method="post" class="ml-3 mb-3">
+     {{ cart_product_form.quantity }}
+    {% csrf_token %}
+    <input type="submit"  class="btn btn-primary" value="Добавить в корзину">
+</form>
 </div>
 
-Вес:цена(выбор)
-ФОРМА ЗАКАЗА: кнопка "заказать"
-<form action="{% url "cart:CartAdd" product.id %}" method="post">
-    {{ cart_product_form }}
-    {% csrf_token %}
-    <input type="submit" value="Добавить в корзину">
-</form>
+</div>
+<!--Вес:цена(выбор)
+ФОРМА ЗАКАЗА: кнопка "заказать"-->
+
 {% endblock %}
 
 
