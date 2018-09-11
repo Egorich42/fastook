@@ -8,10 +8,10 @@
 
 <div class="card-deck">
 {%for product in products%}
-  <div class="card">
-    <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">
+  <div class="card border success">
+    <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap" style="height: 250px;">
     <div class="card-body">
-      <h5 class="card-title"><a href="{{product.get_absolute_url}}">{{product.slug}}</a></h5>
+      <h4 class="card-title"><a href="{{product.get_absolute_url}}" class="font-weight-bold">{{product.slug}}</a></h5>
       <p class="card-text">{{product.description}}</p>
     </div>
     <div class="card-footer">

@@ -7,14 +7,19 @@
 <!--название заведения-->
 <!--ВРЕМЯ КОГДА ДОЛЖНО БЫТЬ ГОТОВО-->
 <!--описание жранины-->
-  <h1>Оформление заказа</h1>
-  <div class="col-sm-4">
-    <h2>Заполните форму</h2>
+<div class="row justify-content-center">
+
+<div class="w-50">
+  <h1 class="mb-5">Оформление заказа</h1>
+
+  <div class="mb-5">
+    <h4>Время, когда вы заберете заказ:</h4>
+    <br>
     <form class="order-form" action="." method="post">
       {{form.appointed_time}}
       {{form.help_texts}}
       {% csrf_token %}
-      <input type="submit" value="Отправить">
+      <input type="submit" class="btn btn-primary" value="Отправить">
     </form>
   </div>
 
@@ -23,8 +28,8 @@
   {% endif %}
 
 
-  <div class="order-info col-sm-8">
-    <h2>Ваш заказ</h2>
+  <div class="mb-5">
+    <h2>Ваш заказ:</h2>
     <ul>
       {% for item in cart  %}
         <li>
@@ -33,5 +38,7 @@
       {% endfor %}
     </ul>
   </div>
+</div>  
+</div>
 {% endblock %}
 

@@ -12,13 +12,11 @@
     <img class="card-img-top" src="{% if tavern.icon %}{{ tavern.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title"><a href="orders/{{tavern.id}}">{{tavern.name}}</a></h5>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">адрес: {{tavern.adres}}</small>
-      <small class="text-muted">время работы:{{tavern.work_time}}</small>
-    </div>
+    
+      <h5 class="card-title">адрес: {{tavern.adres}}</h5>
+      <h5 class="card-title">время работы:{{tavern.work_time}}</h5>
   </div>
-
+</div>
 {%endfor%}
  </div> 
 {% endblock %}
