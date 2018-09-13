@@ -26,12 +26,11 @@
 <a class="navbar-brand" href="/">Главная</a>
 {% if user.is_authenticated %}
 <a href="{{user.client.get_absolute_url}}" class="lead">{{user.username}}</a>
-
 <a href="/logout" class="lead">Выйти</a>
 {%else%}
 <a href="/login" class="lead">Войти</a>
 {% endif %}
-<a href="/cart" class="lead">Корзина</a>
+<a href="/cart/my_current_orders" class="lead">Мои заказы</a>
 </nav>
 
 

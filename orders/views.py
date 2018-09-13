@@ -6,12 +6,6 @@ from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
 
 
-def get_session_k():
-    s = SessionStore()
-    s.save()
-    return s.session_key
-    pass
-
 
 def OrderCreate(request):
     user = request.user

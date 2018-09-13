@@ -6,43 +6,6 @@
 
 <div class="col justify-content-center">
 
-  <h1>Ваш лист заказов</h1>
-  <table class="w-100 mb-5">
-    <thead>
-      <tr>
-        <th>Продукт</th>
-        <th>Заведение</th>
-        <th>Колличество</th>
-        <th>Цена</th>
-        <th>Полная цена</th>
-      </tr>
-    </thead>
-    <tbody>
-
-
-      {%for my_order in my_orders%}
-
-          <tr>
-
-            <td>{{ my_order.product.name }}</td>
-
-            <td><a href="{{my_order.product.place.get_absolute_url }}">{{my_order.product.place.name}}</a></td>
-
-            <td>{{my_order.quantity}}  </td>
-
-            <td class="num">{{my_order.price}} руб.</td>
-
-            <td class="num">{{my_order.get_cost}} руб.</td>
-          </tr>
-
-      {% endfor %}
-    </tbody>
-  </table>
-
-
-
-
-
   <h1>Ваша корзина товаров</h1>
   <table class="w-100">
     <thead>

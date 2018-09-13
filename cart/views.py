@@ -8,7 +8,7 @@ from .cart import Cart
 from .forms import CartAddProductForm
 from django.contrib.sessions.backends.db import SessionStore
 from orders.models import OrderItem
-
+from django.views.generic import ListView
 
 @require_POST
 def CartAdd(request, product_id):
@@ -31,11 +31,26 @@ def CartRemove(request, product_id):
 
 def CartDetail(request):
     cart = Cart(request)
-    my_orders = OrderItem.objects.filter(sess_id = request.session.session_key)
     for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(
-                                        initial={
-                                            'quantity': item['quantity'],
-                                            'update': True
-                                        })
-    return render(request, 'cart/cart_detail.html', {'cart': cart, 'my_orders':my_orders})
+        item['update_quantity_form'] = CartAddProductForm(initial={
+                                                                    'quantity': item['quantity'],
+                                                                    'update': True
+                                                                    })
+
+    return render(request, 'cart/cart_detail.html', {'cart': cart})
+
+
+class OrdersDeatil(ListView):
+    model = OrderItem
+    context_object_name = 'my_orders'
+
+    def get_queryset(self):
+        result = OrderItem.objects.filter(sess_id = self.request.session.session_key) 
+        if len(result) < 1:
+            result = 'no orders'
+        return result
+        pass
+
+    def get_template_names(self):
+        return ['cart/current_orders.html']
+        pass

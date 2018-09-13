@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}
+  Ваша корзина товаров
+{% endblock %}
+{% block content %}
+
+<div class="col justify-content-center">
+
+
+{%if my_orders == "no orders"%}
+
+<h2>Сейчас у вас нет активных хаказов</h2>
+
+
+{% elif my_orders != "no orders" %}  
+
+<h1>Ваш лист заказов</h1>
+  <table class="w-100 mb-5">
+    <thead>
+      <tr>
+        <th>Продукт</th>
+        <th>Заведение</th>
+        <th>Колличество</th>
+        <th>Цена</th>
+        <th>Полная цена</th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+      {%for my_order in my_orders%}
+
+          <tr>
+
+            <td>{{ my_order.product.name }}</td>
+
+            <td><a href="{{my_order.product.place.get_absolute_url }}">{{my_order.product.place.name}}</a></td>
+
+            <td>{{my_order.quantity}}  </td>
+
+            <td class="num">{{my_order.price}} руб.</td>
+
+            <td class="num">{{my_order.get_cost}} руб.</td>
+          </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+{%endif%}
+
+
+{% endblock %}
