@@ -6,7 +6,6 @@ from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
 
 
-
 def OrderCreate(request):
     user = request.user
     cart = Cart(request)
@@ -26,5 +25,6 @@ def OrderCreate(request):
 
     form = OrderCreateForm()
     return render(request, 'orders/order.html', {'cart': cart, 'form': form})
+    pass
 
    

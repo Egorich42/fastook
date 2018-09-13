@@ -7,8 +7,8 @@ from taverns.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
 from django.contrib.sessions.backends.db import SessionStore
-from orders.models import OrderItem
-from django.views.generic import ListView
+from orders.models import OrderItem, Order
+from django.views.generic.list import ListView
 
 @require_POST
 def CartAdd(request, product_id):
@@ -28,16 +28,20 @@ def CartRemove(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart:CartDetail')
+    pass
+
+
 
 def CartDetail(request):
     cart = Cart(request)
     for item in cart:
-        item['update_quantity_form'] = CartAddProductForm(initial={
-                                                                    'quantity': item['quantity'],
-                                                                    'update': True
-                                                                    })
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
+                                                                    'update': True})
 
-    return render(request, 'cart/cart_detail.html', {'cart': cart})
+    return render(request, 'cart/cart_detail.html', {'cart': cart })
+    pass
+
+
 
 
 class OrdersDeatil(ListView):

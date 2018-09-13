@@ -22,4 +22,3 @@ def show_product(request, slug):
 	product = get_object_or_404(Product, slug=slug)
 	cart_product_form = CartAddProductForm()
 	return render(request, 'places/eda.html',{'product': product,'cart_product_form':cart_product_form})
-

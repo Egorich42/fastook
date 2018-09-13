@@ -3,9 +3,9 @@
 from django.conf.urls import url
 from . import views
 from clients.models import Client
+from clients.views import PostDetail, OwnerProfile
 
 urlpatterns = [
-    url(r'^(?P<id>\d+)/$', views.show_user_profile, name='detali'),
-    url(r'^(?P<id>\d+)/orders/(?P<id_tavern>\d+)$', views.show_tavern_orders, name='show_tavern_orders'),
-
+    url(r'^(?P<id>\d+)$', OwnerProfile.as_view(), name='detali'),
+    url(r'^(?P<id>\d+)/orders/(?P<id_tavern>\d+)$', PostDetail.as_view())
 ]
