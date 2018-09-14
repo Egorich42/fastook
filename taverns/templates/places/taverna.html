@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-||{{place}}
+|{{place}}
 {% endblock %}
 {% block content %}
 <!--список жранины-->
 
-<div class="card-deck">
+<div class="row">
 {%for product in products%}
+<div class="col-md-6">
+
   <div class="card border success">
     <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap" style="height: 250px;">
     <div class="card-body">
-      <h4 class="card-title"><a href="{{product.get_absolute_url}}" class="font-weight-bold">{{product.slug}}</a></h5>
+      <h4 class="card-title"><a href="{{product.get_absolute_url}}" class="font-weight-bold">{{product.slug}}</a></h4>
       <p class="card-text">{{product.description}}</p>
     </div>
     <div class="card-footer">
       <small class="text-muted">цена: {{product.price}}</small>
       <small class="text-muted">вес:{{product.weight}}</small>
     </div>
+  </div>
   </div>
 {% endfor %}
 </div>

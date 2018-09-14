@@ -6,21 +6,23 @@
 {% block content %}
 
 
-<div class="card-deck">
+<div class="row">
 
 {%for place in places%}
+<div class="col-md-4">
 
   <div class="card border success">
     <img class="card-img-top" src="{% if place.icon %}{{ place.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap" style="height: 280px;">
     <div class="card-body">
-      <h4 class="card-title"><a href="{{place.get_absolute_url}}" class="font-weight-bold">{{place.name}}</a></h5>
-      <p class="card-text">Шаурменная по аддресу такому-то гтовит для вас жранину, собака дурная</p>
+      <h4 class="card-title"><a href="{{place.get_absolute_url}}" class="font-weight-bold">{{place.name}}</a></h4>
+      <p class="card-text">Шаурменная по аддресу такому-то готовит для вас жранину, собака дурная</p>
     </div>
     <div class="card-footer">
       <small class="text-muted">Адрес:{{place.adres}}</small>
       <br>
       <small class="text-muted">Время работы:{{place.work_time}}</small>
     </div>
+  </div>
   </div>
 
 {%endfor%}
