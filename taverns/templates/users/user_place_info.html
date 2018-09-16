@@ -9,64 +9,89 @@
 <div class="row">
 
 <div class="col-md-6">
-<span><h2>Ожидает</h2></span>
+<span><h2>Заказы в очереди</h2></span>
 
 <div class="row mr-3">
 
 {%for order_w in orders_wait%}
 
-  <div class="card col-md-6" style="background-color:yellow;">
+  <div class="card col-md-6">
 
     <div class="card-body">
-      <h5 class="card-title">{{order_w.order.appointed_time}}</h5>
-      <h5 class="card-title">{{order_w.product.name}}</h5>
-      <h5 class="card-title">колличество:{{order_w.quantity}}</h5>
-      <h5 class="card-title">общая_цена:{{order_w.get_cost}}</h5>
-      <h5 class="card-title">цена:{{order_w.price}}</h5>
-      <h5 class="card-title">номер заказа: {{order_w.generate_mark}}</h5>
 
-    <form action="" method="post">
+      <div class="col-10"  style="background-color:yellow;"><h5 class="card-title">Ожидает</h5></div>
+
+      <h5 class="card-title">{{order_w.order.appointed_time|date:"H-i"}}</h5>
+
+      <div class="row">
+        <div class="col-6"><h5 class="card-title">{{order_w.product.name}}</h5></div>
+        <div class="col-6"><h5 class="card-title">{{order_w.quantity}}шт.</h5></div>
+      </div>
+
+      <div class="row">
+       <div class="col-6"><h5 class="card-title">Сумма:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{order_w.get_cost}}</h5></div>
+      </div>
+
+      <div class="row">
+        <div class="col-6"><h5 class="card-title">Заказ №:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{order_w.generate_mark}}</h5></div>
+      </div>
+
+      <form action="" method="post">
         {% csrf_token %}
          <input name="wait" value="{{order_w.id}}" style = "visibility: hidden;">
         <input type="submit" value="Готов" class="btn btn-primary" />
-    </form>
+      </form>
 
     </div>
 
   </div>
 
-{%endfor%}
-</div>
+  {%endfor%}
+  </div>
 </div>
 
 <div class="col-md-6">
 
 
-<span><h2>Готовы</h2></span>
+<span><h2>Готовые заказы</h2></span>
 
 <div class="row ml-3">
 {%for order_r in orders_ready %}
 
-  <div class="card col-md-6" style="background-color:green;">
+   <div class="card col-md-6">
 
     <div class="card-body">
-      <h5 class="card-title">{{order_r.order.appointed_time}}</h5>
-      <h5 class="card-title">{{order_r.product.name}}</h5>
-      <h5 class="card-title">колличество:{{order_r.quantity}}</h5>
-      <h5 class="card-title">общая_цена:{{order_r.get_cost}}</h5>
-      <h5 class="card-title">цена:{{order_r.price}}</h5>
-      <h5 class="card-title">номер заказа: {{order_r.generate_mark}}</h5>
 
-    <form action="" method="post">
+      <div class="col-10"  style="background-color:green;"><h5 class="card-title">Готов</h5></div>
+
+      <h5 class="card-title">{{order_r.order.appointed_time|date:"H-i"}}</h5>
+
+      <div class="row">
+        <div class="col-6"><h5 class="card-title">{{order_r.product.name}}</h5></div>
+        <div class="col-6"><h5 class="card-title">{{order_r.quantity}}шт.</h5></div>
+      </div>
+
+      <div class="row">
+       <div class="col-6"><h5 class="card-title">Сумма:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{order_r.get_cost}}</h5></div>
+      </div>
+
+      <div class="row">
+        <div class="col-6"><h5 class="card-title">Заказ №:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{order_r.generate_mark}}</h5></div>
+      </div>
+
+      <form action="" method="post">
         {% csrf_token %}
-         <input name="ready" value="{{order_r.id}}" style = "visibility: hidden;">
-
+         <input name="wait" value="{{order_r.id}}" style = "visibility: hidden;">
         <input type="submit" value="Готов" class="btn btn-primary" />
-    </form>
+      </form>
 
     </div>
-  </div>
 
+  </div>
 {%endfor%}
 </div>
 </div>

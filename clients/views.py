@@ -14,6 +14,8 @@ from orders.models import OrderItem, Order
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from django.db.models import Sum, F
+
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
@@ -38,8 +40,12 @@ class OwnerProfile(ListView):
     @method_decorator(login_required)
     def get(self, request,id):
         user = get_object_or_404(User, id=id)
-        taverns = Taverna.objects.filter(owner_id = user.id-1)  
-        print(taverns[0].id)
+        taverns = Taverna.objects.filter(owner_id = user.id-1) 
+        for place in taverns:
+            place.orders_in_queue_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0]).count()
+            place.orders_paid_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2]).count()
+            place.orders_paid_sum = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2]).annotate( result=(Sum(F('price')*F('quantity'))))
+
         return render(request, 'users/user_profile.html', {'taverns':taverns})
         pass
 
@@ -51,6 +57,7 @@ class PostDetail(ListView):
         orders_for_place_wait = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0])
         orders_for_place_ready = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[1])
         orders_for_place_paid = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2])
+
 
         return render(request, "users/user_place_info.html",{'orders_wait':orders_for_place_wait,
                                                               'orders_ready':  orders_for_place_ready, 
@@ -66,7 +73,7 @@ class PostDetail(ListView):
         if post_value == 'ready':
             status = Order.item_stats[2]
 
-        chosen_order = Order.objects.filter(id = request.POST[post_value]).update(item_status = status)  
+        Order.objects.filter(id = request.POST[post_value]).update(item_status = status)  
 
 
         place = get_object_or_404(Taverna, id=id_tavern)
