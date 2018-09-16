@@ -14,7 +14,7 @@ from orders.models import OrderItem, Order
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from django.db.models import Sum, F
+from django.db.models import Sum, F, FloatField
 
 
 class LoginFormView(FormView):
@@ -43,8 +43,8 @@ class OwnerProfile(ListView):
         taverns = Taverna.objects.filter(owner_id = user.id-1) 
         for place in taverns:
             place.orders_in_queue_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0]).count()
-            place.orders_paid_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2]).count()
-            place.orders_paid_sum = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2]).annotate( result=(Sum(F('price')*F('quantity'))))
+            place.orders_paid_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = 'paid').count()
+            place.orders_paid_sum = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = 'paid').aggregate(Sum('price'))['price__sum']
 
         return render(request, 'users/user_profile.html', {'taverns':taverns})
         pass

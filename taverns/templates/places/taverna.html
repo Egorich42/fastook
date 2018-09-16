@@ -8,7 +8,7 @@
 
 <div class="row">
 {%for product in products%}
-<div class="col-md-6">
+<div class="col-md-4">
 
   <div class="card border success">
     <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap" style="height: 250px;">

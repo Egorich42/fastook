@@ -34,7 +34,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, db_index=True, verbose_name="Название")
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to='products/', blank=True, verbose_name="Изображение товара")
-    price = models.CharField(max_length=200, db_index=True, blank=True, verbose_name="Цена")
+    price = models.FloatField(db_index=True, blank=True, verbose_name="Цена")
     weight =  models.CharField(max_length=50, db_index=True, blank=True, verbose_name="Вес")
     description = models.TextField(blank=True, verbose_name="Описание")
    

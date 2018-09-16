@@ -9,18 +9,31 @@
 <div class="row">
 
 {%for tavern in taverns%}
-<div class="col-md-4">
+<div class="col-md-6">
   <div class="card">
-    <img class="card-img-top" src="{% if tavern.icon %}{{ tavern.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap">
+    <img class="card-img-top" src="{% if tavern.icon %}{{ tavern.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap" style="height: 400px;">
     <div class="card-body">
       <h5 class="card-title"><a href="{{user.id}}/orders/{{tavern.id}}">{{tavern.name}}</a></h5>
-      tavid {{user.id}}
-    
-      <h5 class="card-title">адрес: {{tavern.adres}}</h5>
-      <h5 class="card-title">время работы:{{tavern.work_time}}</h5>
-      Заказов в очереди:{{tavern.orders_in_queue_count}}
-      Проданно за сегодня:{{tavern.orders_paid_count}}
-      На сумму:{{tavern.orders_paid_sum}}
+
+      <div class="row">
+
+
+        <div class="col-6"><h5 class="card-title">{{tavern.adres}}</h5></div>
+        <div class="col-6"><h5 class="card-title">{{tavern.work_time}}</h5></div>
+
+        <div class="col-6"><h5 class="card-title">Заказов в очереди №:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{tavern.orders_in_queue_count}}</h5></div>
+
+        <div class="col-6"><h5 class="card-title">Проданно за сегодня:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{tavern.orders_paid_count}}</h5></div>
+
+        <div class="col-6"><h5 class="card-title">На сумму:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{tavern.orders_paid_sum}}</h5></div>
+
+      </div>
+
+
+
   </div>
 </div>
 </div>
