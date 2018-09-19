@@ -9,7 +9,7 @@
 <div class="row">
 
 {%for tavern in taverns%}
-<div class="col-md-6">
+<div class="col-12  col-md-6 col-lg-4  mb-5">
   <div class="card">
     <img class="card-img-top" src="{% if tavern.icon %}{{ tavern.icon.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" alt="Card image cap" style="height: 400px;">
     <div class="card-body">
@@ -30,6 +30,8 @@
         <div class="col-6"><h5 class="card-title">На сумму:</h5></div>
         <div class="col-6"><h5 class="card-title">{{tavern.orders_paid_sum}}</h5></div>
 
+        <div class="col-6"><h5 class="card-title">Средний чек:</h5></div>
+        <div class="col-6"><h5 class="card-title">{{tavern.orders_paid_avg|floatformat:2}}</h5></div>
       </div>
 
 

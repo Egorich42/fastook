@@ -14,7 +14,7 @@ from orders.models import OrderItem, Order
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from django.db.models import Sum, F, FloatField
+from django.db.models import Sum, Avg, FloatField
 
 
 class LoginFormView(FormView):
@@ -43,8 +43,32 @@ class OwnerProfile(ListView):
         taverns = Taverna.objects.filter(owner_id = user.id-1) 
         for place in taverns:
             place.orders_in_queue_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0]).count()
-            place.orders_paid_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = 'paid').count()
-            place.orders_paid_sum = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = 'paid').aggregate(Sum('price'))['price__sum']
+            place.orders_paid_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status =  Order.item_stats[2]).count()
+            place.orders_paid_sum = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status =  Order.item_stats[2]).aggregate(Sum('price'))['price__sum']
+
+            if place.orders_paid_sum == None:
+                place.orders_paid_sum = 0
+
+            place.orders_paid_avg = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status =  Order.item_stats[2]).aggregate(Avg('price'))['price__avg']
+            if place.orders_paid_avg == None:
+                place.orders_paid_avg = 0
+        
+            """
+            list_of_dicts = list(OrderItem.objects.all().filter(product__place__id = place.id).values())
+
+            print(list_of_dicts)
+
+            ll = {}
+            for x in list_of_dicts:
+                if ll[x['product_id']] == True:
+                    ll[x['product_id']] += x['quantity']
+                else:
+                    ll[x['product_id']] = x['quantity']
+
+            """
+
+
+
 
         return render(request, 'users/user_profile.html', {'taverns':taverns})
         pass
@@ -58,6 +82,9 @@ class PostDetail(ListView):
         orders_for_place_ready = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[1])
         orders_for_place_paid = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2])
 
+        print(orders_for_place_wait.count())
+        print(orders_for_place_ready.count())
+        print(orders_for_place_paid.count())
 
         return render(request, "users/user_place_info.html",{'orders_wait':orders_for_place_wait,
                                                               'orders_ready':  orders_for_place_ready, 
@@ -65,24 +92,24 @@ class PostDetail(ListView):
 
     def post(self, request, id_tavern, **kwargs):
         post_value = list(request.POST.keys())[1]
-        status = Order.item_stats[1][0]
 
         if post_value == 'wait':
-            status = Order.item_stats[1]
+            Order.objects.filter(id = request.POST[post_value]).update(item_status = Order.item_stats[1])  
 
         if post_value == 'ready':
-            status = Order.item_stats[2]
+            Order.objects.filter(id = request.POST[post_value]).update(item_status = Order.item_stats[2])  
 
-        Order.objects.filter(id = request.POST[post_value]).update(item_status = status)  
-
-
-        place = get_object_or_404(Taverna, id=id_tavern)
+        place = get_object_or_404(Taverna, id = id_tavern)
 
         orders_for_place_wait = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0])
         orders_for_place_ready = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[1])
         orders_for_place_paid = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[2])
 
-        return render(request, "users/user_place_info.html",{'orders_wait':orders_for_place_wait,
+        print(orders_for_place_wait.count())
+        print(orders_for_place_ready.count())
+        print(orders_for_place_paid.count())
+
+        return render(request, "users/user_place_info.html", {'orders_wait':orders_for_place_wait,
                                                               'orders_ready':  orders_for_place_ready, 
                                                               'orders_paid': orders_for_place_paid})
 
