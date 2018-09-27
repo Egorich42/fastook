@@ -5,7 +5,7 @@ from clients.models import Client
 # Create your models here.
 class Taverna(models.Model):
     owner = models.ForeignKey(Client, related_name='owner', on_delete=models.CASCADE, verbose_name="владелец", default=1)
-    icon = models.ImageField(upload_to='place_icons/', blank=True, verbose_name="Аватарка заведения")
+    icon = models.ImageField(upload_to='place_icons/', blank=True, verbose_name="Аватарка заведения", default = 'place_icons/default.png')
     name = models.CharField(max_length=200, db_index=True, verbose_name="Название")
     adres = models.CharField(max_length=200, db_index=True, verbose_name="Адрес")
     slug = models.SlugField(max_length=200, db_index=True,blank=True)
@@ -33,7 +33,7 @@ class Product(models.Model):
     place = models.ForeignKey(Taverna, related_name='products', on_delete=models.CASCADE, blank=True, verbose_name="Заведение")
     name = models.CharField(max_length=200, db_index=True, verbose_name="Название")
     slug = models.SlugField(max_length=200, db_index=True)
-    image = models.ImageField(upload_to='products/', blank=True, verbose_name="Изображение товара")
+    image = models.ImageField(upload_to='products/', blank=True, verbose_name="Изображение товара",default = 'products/deafult.png')
     price = models.FloatField(db_index=True, blank=True, verbose_name="Цена")
     weight =  models.CharField(max_length=50, db_index=True, blank=True, verbose_name="Вес")
     description = models.TextField(blank=True, verbose_name="Описание")

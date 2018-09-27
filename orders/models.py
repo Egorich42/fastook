@@ -3,7 +3,7 @@ from taverns.models import Product, Taverna
 import datetime
 from django.conf import settings
 
-
+from datetime import date
 
 class Order(models.Model):
     item_stats = (('wait', 'Ожидает'),('ready','Готов'),('paid','Оплачен'))
@@ -33,6 +33,7 @@ class OrderItem(models.Model):
     price = models.DecimalField(verbose_name='Цена', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(verbose_name='Количество', default=1)
     sess_id = models.CharField(max_length = 320,  db_index=True,  verbose_name='Сессия')
+    created_at = models.DateTimeField(default = date.today())
 
     def generate_mark(self):
         if self.quantity <= 9:
