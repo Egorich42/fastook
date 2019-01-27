@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+&nbsp;|&nbsp;{{user.username}}
+{% endblock %}
+{% block content %}
+
+СПИСОК блюд:
+-в виде списка.
+-каждый пункт - редактируемая форма.
+редактировать-> видна форма реадача.
+-сохранить-апдейтит модель в базу
+
+Добавить блюдо- большая кнопка сверх - нажал-увидел форму добавить, в ней НЕИЗМЕНЯЕМЫЙ СКРЫТЫЙ идентификатор места для повара и возможность изменять места для шефа.
+
+FORM:
+non-editable - place
+create food:
+name
+photo
+weight\s?
+descr? if descr = none - hide?
+price
+
+{% endblock %}
+

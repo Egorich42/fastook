@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+| Ближайшие заведения
+{% endblock %}
+{% block content %}
+
+<div class="row">
+<div ckass = "col-12">
+  <div class="col-md-3 col-sm-4 col-xs-6 color-1">
+    <form method="post" action="" >
+      <div class="form-group">
+        <input type="text" name="coords" id="client_coords" value="" >
+          Введите свой адрес:<input type="text" name="custom_adress" id="client_adress" value="">
+
+        <select name="search_radius">
+          <option value="0.001" selected>100 м.</option>
+           <option value="0.003">300 м.</option>
+           <option value="0.01">1 км.</option>
+           <option value="0.03">3 км.</option>
+           <option value="0.05">5 км</option>
+        </select>      
+
+
+        <input type="submit" value="Найти ближайшие кафе" class="btn btn-primary">
+          {% csrf_token %}
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+{%for place in places%}
+
+
+{% if place.marker == 'empty' %}
+<div class="col-md-4 mb-4">
+  <div class="card border success border border-secondary">
+    <div class="card-body">
+      <h4 class="card-title">
+        <p class="text-secondary">{{place.name}}</p>
+      </h4>
+      <p class="card-text" style="height: 50px;">По адресу: {{place.adres}}</p>
+      <p class="card-text">В {{place.way_long}} км. от вас.</p>
+    </div>
+
+  </div>
+</div>
+
+{%else%}
+
+
+<div class="col-md-4 mb-4">
+  <div class="card border success border border-primary">
+    <div class="card-body">
+      <h4 class="card-title">
+         <a href="{{place.get_absolute_url}}" class="font-weight-bold">{{place.name}}</a>
+      </h4>
+      <p class="card-text" >По адресу: {{place.adres}}</p>
+      <p class="card-text">В {{place.way_long}} км. от вас.</p>  
+      <p class="card-text">
+        <a href="{{place.marker}}" class="card-title"> ОТКРЫТЬ ПРОФИЛЬ ЗАВЕДЕНИЯ</a>
+      </p>
+    </div>
+  </div>
+</div>
+{%endif%}
+
+{%endfor%}
+
+
+
+ </div> 
+
+<div id="mapid" style="width: 850px; height: 600px; margin: 50px"></div>
+<script>
+window.onload = function() {
+  if (navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition(
+      geolocationSuccess, geolocationFailure, 
+        
+        {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+          }
+    );
+
+    console.log("Поиск начался");
+  }
+
+  else {alert("Ваш браузер не поддерживает геолокацию")}
+};
+
+function geolocationSuccess(position) {
+  var my_position = [position.coords.latitude, position.coords.longitude]
+  var list_of_adreses = {{places|safe}}
+  
+
+  var mymap = L.map('mapid').setView(my_position,15);
+
+
+
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    maxZoom: 18,
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    id: 'mapbox.streets'
+  }).addTo(mymap);
+
+  L.marker(my_position).addTo(mymap).bindPopup('ВЫ ЗДЕСЬ').openPopup();
+
+
+
+  document.getElementById('client_coords').value =[
+              position.coords.latitude,
+              position.coords.longitude,
+              position.coords.accuracy
+              ];
+
+  for (var x =0; x < list_of_adreses.length; x++) {
+
+    L.marker(
+        [list_of_adreses[x]['coords'][1], 
+         list_of_adreses[x]['coords'][0]]
+         ).addTo(mymap)
+          .bindPopup(
+                '<b>'+list_of_adreses[x]['name']+'</b>'
+                 +'<br>'+list_of_adreses[x]['adres']
+                 +'<br>'+'в '+list_of_adreses[x]['way_long']+' км. от вас'
+                );
+    };
+
+};
+
+
+function geolocationFailure(positionError) {
+  if(positionError) {
+    alert("Вы решили не предоставлять данные о своем местоположении, " + 
+            "но это не проблема. Мы больше не будем запрашивать их у вас."+"Но реузльтат выйдет довольно не точный");
+
+    document.getElementById('client_coords').value = 'no coords';
+  }
+
+};
+
+
+
+</script>
+
+
+{% endblock %}
+

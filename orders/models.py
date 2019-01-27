@@ -4,6 +4,7 @@ import datetime
 from django.conf import settings
 
 from datetime import date
+from django.utils import timezone
 
 class Order(models.Model):
     item_stats = (('wait', 'Ожидает'),('ready','Готов'),('paid','Оплачен'))
@@ -33,20 +34,8 @@ class OrderItem(models.Model):
     price = models.DecimalField(verbose_name='Цена', max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(verbose_name='Количество', default=1)
     sess_id = models.CharField(max_length = 320,  db_index=True,  verbose_name='Сессия')
-    created_at = models.DateTimeField(default = date.today())
+    created_at = models.DateTimeField(default = timezone.now)
 
-    def generate_mark(self):
-        if self.quantity <= 9:
-            self.quantity = '0{}'.format(self.quantity)
-
-        if self.product.id <= 9:
-            self.product.id = '0{}'.format(self.product.id)
-
-        if self.product.place.id <= 9:
-            self.product.place.id = '0{}'.format(self.product.place.id)
-
-        return '{}{}{}{}'.format(self.id, self.product.place.id, self.product.id, self.quantity)
-        pass
 
     def __str__(self):
         return '{}'.format(self.id)

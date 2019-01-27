@@ -20,6 +20,8 @@ import operator
 
 from datetime import date
 
+from .models import Cook
+from .forms import DishCreateForm
 
 import itertools
 from operator import itemgetter
@@ -45,13 +47,42 @@ class LogoutView(View):
 
 
 
+
+
+
+class CookPlace(ListView):
+    def get(self, request, id):
+        cook = get_object_or_404(Cook, id = id)
+        print('suuuuka')
+        if cook.status == 'cook':
+            form = DishCreateForm()
+            place_dishes = Product.objects.all()
+            print(place_dishes,'!!!!!!!!!!!!!!!!!')
+            return render(request, 'users/cook_cabinet.html', {'form':form, 'place_dishes':place_dishes})
+
+
+    def post(self, request, id):
+
+        form = DishCreateForm(request.POST)
+
+        if form.is_valid():
+            Product.objects.create(place = get_object_or_404(Taverna, id = id), 
+                                    name =     request.POST['name'],
+                                    slug =     request.POST['slug'],
+                                     image =    request.POST['image'],
+                                     price =    request.POST['price'],
+                                    weight =     request.POST['weight'],
+                                    description =     request.POST['description'],)
+        return render(request, 'users/cook_cabinet.html')
+
+
+
+
 class OwnerProfile(ListView):
+    def get(self, request, id):
+        user = get_object_or_404(User, id = id)
 
-
-
-    @method_decorator(login_required)
-    def get(self, request,id):
-        user = get_object_or_404(User, id=id)
+        
         taverns = Taverna.objects.filter(owner_id = user.id-1) 
         for place in taverns:
             place.orders_in_queue_count = OrderItem.objects.all().filter(product__place__id = place.id, order__item_status = Order.item_stats[0], created_at=date.today()).count()
@@ -102,6 +133,7 @@ class OwnerProfile(ListView):
 
         return render(request, 'users/user_profile.html', {'taverns':taverns})
         pass
+        
 
 
 class PostDetail(ListView):
@@ -142,4 +174,5 @@ class PostDetail(ListView):
         return render(request, "users/user_place_info.html", {'orders_wait':orders_for_place_wait,
                                                               'orders_ready':  orders_for_place_ready, 
                                                               'orders_paid': orders_for_place_paid})
+
 

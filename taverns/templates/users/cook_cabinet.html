@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+&nbsp;|&nbsp;{{user.username}}dfdf
+{% endblock %}
+{% block content %}
+
+      <form action="" method="post">
+      {{form.as_p}}
+
+        {% csrf_token %}
+
+        <input type="submit" value="Готов" class="btn btn-primary" />
+      </form>
+__________________________________________________________________________
+ 
+
+ ТУТ ИДЕТ ОДНА ФОРМАЖ А СНИЗУ - СПИСК
+{%for dish in place_dishes %}
+   <form action="" method="post">
+    {{dish.name}}
+    {{dish.place.id}}
+
+     {% csrf_token %}
+     <input name="dish_id" value="{{dish.id}}" style = "visibility: hidden;">
+	 <input name="dish_name" value="{{dish.name}}" style = "visibility: hidden;">
+	 <input name="dish_place" value="{{dish.place.id}}" style = "visibility: hidden;">
+
+
+    <input type="submit" value = "Изменить"  name = "change"  class = "btn btn-primary" />
+    <input type="submit" value = "Удалить"   name = "delete"  class = "btn btn-primary" />
+   </form>
+
+{% endfor %}
+
+
+
+
+
+
+
+{% endblock %}
+

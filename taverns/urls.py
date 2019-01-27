@@ -8,10 +8,13 @@ from taverns.views import *
 from clients.views import LoginFormView, LogoutView
 from django.conf.urls import *
 
+app_name = 'taverns'
+
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
     url(r'^login/$',LoginFormView.as_view()),
+    url(r'^locations/$',show_nearest_cafes),
     url(r'^logout/$',LogoutView.as_view()),
     url(r'^places/(?P<slug>[-\w]+)/$', views.show_tavern, name='detali'), 
     url(r'^products/(?P<slug>[-\w]+)/$',  views.show_product, name='detail'),

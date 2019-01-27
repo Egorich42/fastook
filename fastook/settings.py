@@ -21,6 +21,10 @@ INSTALLED_APPS = [
     'clients',
 ]
 
+#https://code-examples.net/ru/docs/django~2.0/ref/contrib/gis/install/geolibs
+#https://code-examples.net/ru/docs/django~2.0/ref/contrib/gis/install/index
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
